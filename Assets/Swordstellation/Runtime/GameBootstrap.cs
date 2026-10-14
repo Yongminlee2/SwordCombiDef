@@ -59,9 +59,65 @@ namespace Swordstellation.Runtime
             // Learning-path steps introduce each system; the five-page guide
             // stays under Settings.
             ShowMainMenu();
+            ApplyLaunchShot();
             Debug.Log(
                 $"Swordstellation bootstrap ready: " +
                 $"locale={SaveData.Locale}, tutorial={SaveData.TutorialCompleted}");
+        }
+
+        // Simulator screenshots: taps cannot be injected into the iOS simulator
+        // on the build Mac, so a launch argument picks the screen instead.
+        //   xcrun simctl launch <udid> com.ymlee.swordstellation -shot codex -locale en
+        private void ApplyLaunchShot()
+        {
+            string locale = IosNative.LaunchArgument("locale");
+            if ((locale == "en" || locale == "ko") && locale != Localization.Locale)
+            {
+                Localization.Toggle();
+            }
+
+            switch (IosNative.LaunchArgument("shot"))
+            {
+                case "stages": ShowStageSelect(); break;
+                case "settings": ShowSettings(); break;
+                case "tutorial": ShowTutorial(); break;
+                case "codex": ShowCodex(); break;
+                case "recipes": ShowRecipeCodex(); break;
+                case "enemies": ShowEnemyCodex(); break;
+                case "runes": ShowRuneCodex(); break;
+                case "stats": ShowStatistics(); break;
+                case "upgrades": ShowUpgrades(); break;
+                case "shop": ShowShop(); break;
+                case "battle":
+                    // -step N plays learning step N of the first rift.
+                    int.TryParse(IosNative.LaunchArgument("step"), out int step);
+                    if (LearningPath.Get(step) != null)
+                    {
+                        StartBattle(LearningPath.StageId, RunMode.Standard, step);
+                    }
+                    else
+                    {
+                        StartBattle();
+                    }
+                    int.TryParse(IosNative.LaunchArgument("summon"), out int summons);
+                    if (summons > 0)
+                    {
+                        StartCoroutine(SummonForShot(summons));
+                    }
+                    break;
+            }
+        }
+
+        private System.Collections.IEnumerator SummonForShot(int count)
+        {
+            yield return new WaitForSeconds(1f);
+            // Close the learning-step intro card the way its button does.
+            GameObject.Find("LearningIntroConfirm")?.GetComponent<Button>()?.onClick.Invoke();
+            for (int i = 0; i < count && _battle != null; i++)
+            {
+                _battle.TrySummonSword();
+                yield return new WaitForSeconds(0.15f);
+            }
         }
 
         private void OnDestroy()

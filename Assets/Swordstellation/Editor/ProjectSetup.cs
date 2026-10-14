@@ -5,13 +5,19 @@ using Swordstellation.Runtime;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
+#if UNITY_ANDROID || UNITY_EDITOR_WIN
 using UnityEditor.Android;
+#endif
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Swordstellation.Editor
 {
+    // UnityEditor.Android exists only in editors with the Android module. The
+    // Mac editor used for iPhone builds has the iOS module only, so the
+    // Android-only parts are compiled on Windows or when Android is active.
+#if UNITY_ANDROID || UNITY_EDITOR_WIN
     public sealed class AndroidGradlePathFix :
         IPostGenerateGradleAndroidProject
     {
@@ -41,6 +47,7 @@ namespace Swordstellation.Editor
             }
         }
     }
+#endif
 
     public static class ProjectSetup
     {
@@ -60,17 +67,21 @@ namespace Swordstellation.Editor
             PlayerSettings.SetScriptingBackend(NamedBuildTarget.Android, ScriptingImplementation.IL2CPP);
             PlayerSettings.SetApiCompatibilityLevel(NamedBuildTarget.Android, ApiCompatibilityLevel.NET_Standard);
 
+#if UNITY_ANDROID || UNITY_EDITOR_WIN
             PlayerSettings.Android.bundleVersionCode = 23;
             PlayerSettings.Android.minSdkVersion = AndroidSdkVersions.AndroidApiLevel25;
             PlayerSettings.Android.targetSdkVersion = (AndroidSdkVersions)36;
             PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARM64;
             PlayerSettings.Android.buildApkPerCpuArchitecture = false;
+#endif
             PlayerSettings.fullScreenMode = FullScreenMode.FullScreenWindow;
 
             QualitySettings.vSyncCount = 0;
             Application.targetFrameRate = 60;
 
+#if UNITY_ANDROID || UNITY_EDITOR_WIN
             ConfigureIcon();
+#endif
             EnsureMainScene();
             AssetDatabase.SaveAssets();
             Debug.Log($"Swordstellation configured: {ApplicationId}, portrait, ARM64, API 36.");
@@ -110,7 +121,7 @@ namespace Swordstellation.Editor
             EnsureBuildSucceeded(report);
         }
 
-        private static void EnsureMainScene()
+        internal static void EnsureMainScene()
         {
             if (!AssetDatabase.IsValidFolder("Assets/Scenes"))
             {
@@ -131,6 +142,7 @@ namespace Swordstellation.Editor
             };
         }
 
+#if UNITY_ANDROID || UNITY_EDITOR_WIN
         private static void ConfigureIcon()
         {
             AssetDatabase.ImportAsset(AppIconPath, ImportAssetOptions.ForceUpdate);
@@ -200,6 +212,8 @@ namespace Swordstellation.Editor
                 kind,
                 icons);
         }
+
+#endif
 
         private static void ConfigureSigningFromEnvironment()
         {

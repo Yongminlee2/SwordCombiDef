@@ -1,6 +1,6 @@
 # 검별공방: 랜덤 디펜스
 
-**Swordstellation: Random Forge** is a portrait Android sword-combination game with
+**Swordstellation: Random Forge** is a portrait Android and iPhone sword-combination game with
 defense pressure. Swords occupy a central board while enemies circulate around its
 outer path; combining swords is the main action and progression mechanism.
 
@@ -30,6 +30,8 @@ deferred.
 - `Documentation/BuildAndTest.md`: reproducible Android build and verification steps
 - `Tools/build_android.ps1`: Windows Android build wrapper
 - `Tools/run_tests.ps1`: Unity rules, progression, and balance regression suite
+- `Tools/ios-build.sh`, `Tools/ios-shots.sh`: iPhone build and simulator screenshots on the Mac
+- `Documentation/iOSBuild.md`: iPhone build from the same project and code
 
 ## Build principle
 
