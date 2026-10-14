@@ -1,0 +1,19 @@
+{
+  "name": "Swordstellation.Editor",
+  "rootNamespace": "Swordstellation.Editor",
+  "references": [
+    "Swordstellation.Core",
+    "Swordstellation.Runtime"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

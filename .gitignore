@@ -1,0 +1,48 @@
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]in/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[.]utmp/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+.idea/
+.vs/
+*.csproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+sysinfo.txt
+
+# Signing and store secrets
+*.jks
+*.keystore
+*.p12
+*.pem
+*.key
+service-account*.json
+google-services.json
+
+# Build output
+*.apk
+*.aab
+*.apks
+*.obb
+
+# Scratch files
+tmp/
+
+# The balance simulator needs its project file
+!Tools/CoreSmoke/CoreSmoke.csproj

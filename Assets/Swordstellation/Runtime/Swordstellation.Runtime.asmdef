@@ -1,0 +1,16 @@
+{
+  "name": "Swordstellation.Runtime",
+  "rootNamespace": "Swordstellation.Runtime",
+  "references": [
+    "Swordstellation.Core"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

@@ -1,0 +1,20 @@
+{
+  "name": "Swordstellation.Tests.PlayMode",
+  "rootNamespace": "Swordstellation.Tests.PlayMode",
+  "references": [
+    "Swordstellation.Core",
+    "Swordstellation.Runtime"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false,
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ]
+}
